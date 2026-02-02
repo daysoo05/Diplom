@@ -1,0 +1,14 @@
+# Default configuration for the prototype
+default:
+  lat: 52.52
+  lon: 13.405
+  bbox: [49.0, 5.0, 55.0, 20.0]    # lat_min, lon_min, lat_max, lon_max (for downloads)
+  variables: ["t2m","tp"]
+  start: "2022-01-01"
+  end: "2022-03-31"
+  horizon_days: 7
+  ingest_cadence: "daily"
+  model:
+    window: 14
+    epochs: 30
+    lr: 0.001
