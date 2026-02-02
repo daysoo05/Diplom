@@ -1,0 +1,42 @@
+name: Daily ingest and train (example)
+
+on:
+  schedule:
+    - cron: '0 6 * * *'  # daily at 06:00 UTC
+  workflow_dispatch:
+
+jobs:
+  ingest-and-train:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.9"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Ingest ERA5 (example)
+        env:
+          # For real runs, set secrets.CDS_API_KEY and secrets.CDS_API_URL in repo secrets and write ~/.cdsapirc
+          CDS_API_KEY: ${{ secrets.CDS_API_KEY || '' }}
+        run: |
+          echo "Skipping actual ingest in CI. For production, configure CDS credentials as secrets."
+          # Example: python scripts/ingest_era5.py --start 2022-01-01 --end 2022-01-31 --out data/raw/era5_ci.nc --variables t2m --bbox 49 5 55 20
+
+      - name: Preprocess & Train
+        run: |
+          echo "Running preprocess and training on any available example data."
+          # If demo data exists, preprocess and train
+          if [ -f data/raw/era5_example.nc ]; then
+            python scripts/preprocess.py --in data/raw/era5_example.nc --lat 52.52 --lon 13.405 --out data/processed/series_berlin.csv
+            python models/train_lstm.py --in data/processed/series_berlin.csv --out models/model.pt --epochs 5
+          else
+            echo "No demo data present; skipping model training in CI."
+          fi

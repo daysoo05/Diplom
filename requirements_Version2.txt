@@ -1,0 +1,17 @@
+cdsapi
+xarray
+pandas
+numpy
+dask[complete]
+xesmf
+netCDF4
+pytorch
+torchvision
+scikit-learn
+streamlit
+fastapi
+uvicorn
+aiohttp
+pyyaml
+matplotlib
+seaborn
