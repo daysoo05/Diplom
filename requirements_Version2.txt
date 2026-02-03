@@ -15,3 +15,8 @@ aiohttp
 pyyaml
 matplotlib
 seaborn
+streamlit
+matplotlib
+torch
+numpy
+cdsapi
