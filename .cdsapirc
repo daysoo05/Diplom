@@ -1,0 +1,5 @@
+cat > ~/.cdsapirc <<EOF
+url: https://cds.climate.copernicus.eu/api
+key: 941b92e4-8adb-4058-82a3-ab89bd8678cc
+EOF
+chmod 600 ~/.cdsapirc
